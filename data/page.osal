@@ -1,0 +1,35 @@
+#windowBar {
+	opacity: 255;
+	bg-color: 200 200 200;
+	border-style: solid;
+	border-width: 1;
+	border-color: 0 0 0 64;
+}
+
+.window {
+  min-width: 100;
+  min-height: 100;
+}
+
+.windowButton {
+	border-style: none;
+}
+
+.gameButton:hover {
+	bg-color1: 142 244 255 192;
+	bg-color2: 122 224 235 192;
+ 	size: 0 0 110 28;
+}
+
+.gameButton {
+	size: 0 0 100 25;
+	bg-color1: 142 244 255 255;
+	bg-color2: 122 224 235 255;
+	hover-color1: 142 244 255 200;
+	hover-color2: 122 224 255 200;
+	centered: true;
+}
+
+.windowButton {
+	border-style: none;
+}

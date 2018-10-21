@@ -1,0 +1,29 @@
+<panel name="panel" size="100 100 0 0" bg-color1="0 0 0 0" bg-color2="0 0 0 0" cursor="pointer">
+
+	<button name="topBtn" class="gameButton" location="100 0 -100 50" text="'Next Page'" right-click-options="'test123' '84848' 'nice yo'">
+  
+	<button name="middle" class="gameButton" location="100 50 -100 0" text="'Move'" right-click-options="'test123' '84848' 'nice yo'">
+  
+	<button name="startBtn" class="gameButton" location="50 100 -80 -35" text="'Rain'" right-click-options="'dont rain' 'rain a bit'">
+  
+	<button name="pauseBtn" class="gameButton" location="50 100 80 -35" text="'Spawn'">
+  
+</panel>
+
+<panel name="container" location="0 0 0 26" size="100 100 0 -26" bg-color="255 255 255" visible="false">
+
+		<button name="btn1" location="0 0 100 25" text="Back" centered="true">
+    
+		<button name="btn2" location="50 25 0 0" text="'Add Buttons'">
+    
+		<button name="btn3" location="50 50 0 0" text="'Remove Buttons'">
+    
+		<textfield name="field" size="0 0 250 25" location="0 25 500 -50" centered="true">
+    
+		<textfield name="field2" location="0 75 500 -40" carat-width="3" bg-color="0 255 0" carat-color="0 0 255" font="'forced square' 14" highlight-color="255 0 0">
+		
+		<scrollpanel name="panel2" location="0 0 0 55" size="0 0 300 300" bg-color="200 200 225">
+    
+		</scrollpanel>
+    
+</panel>
