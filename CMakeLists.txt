@@ -6,4 +6,4 @@ add_subdirectory (OUI)
 
 add_executable (ouiDemo source/main.cpp)
 
-target_link_libraries (ouiDemo LINK_PUBLIC OUI)
+target_link_libraries (ouiDemo LINK_PUBLIC OUI_lib)
