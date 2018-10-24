@@ -15,10 +15,11 @@ int main()
 		window->setName("original");
 		window->setTitle(u"Falling Dots");
 
-		window->addOSALStyle(u"data/page.osal");
+		window->addOSALStyle(u"./data/page.osal");
 
 		oui::ComponentLoader cl;
-		cl.loadComponents(u"data/page.oui");
+		cl.loadComponents(u"./data/page.oui");
+		
 		oui::Panel* panel = cl.toPanel();
 		window->addChild(panel);
 
