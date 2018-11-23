@@ -78,6 +78,8 @@ int main(int argc, char *argv[])
 
 			oui::sleep(4);
 		}
+
+        oui::shutdown();
 	} catch(char* error) {
 		std::cout << "Error: " << error << std::endl;
 	}

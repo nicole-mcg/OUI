@@ -20,7 +20,7 @@
     
 		<textfield name="field" size="0 0 250 25" location="0 25 500 -50" centered="true">
     
-		<textfield name="field2" location="0 75 500 -40" carat-width="3" bg-color="0 255 0" carat-color="0 0 255" font="'forced square' 14" highlight-color="255 0 0">
+		<textfield name="wackyField" location="0 75 500 -40" carat-width="3" bg-color="0 255 0" carat-color="0 0 255" font="'forced square' 14" highlight-color="255 0 0" centered="true">
 		
 		<scrollpanel name="panel2" location="0 0 0 55" size="0 0 300 300" bg-color="200 200 225">
     
