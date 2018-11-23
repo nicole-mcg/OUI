@@ -11,10 +11,18 @@ project (OUI_Demo)
 
 file(COPY data DESTINATION .)
 
+file(GLOB_RECURSE V8_LIB
+    "/usr/local/opt/v8/lib/*.dylib"
+)
+
 add_subdirectory (OUI)
 
 add_executable (OUI_Demo source/main.cpp)
 
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/OUI/include)
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/OUI/include
+    /usr/local/opt/v8
+    /usr/local/opt/v8/include
+)
 
-target_link_libraries (OUI_Demo LINK_PUBLIC OUI_lib)
+target_link_libraries (OUI_Demo LINK_PUBLIC OUI_lib ${V8_LIB})
