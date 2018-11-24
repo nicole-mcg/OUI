@@ -25,4 +25,4 @@ include_directories(
     /usr/local/opt/v8/include
 )
 
-target_link_libraries (OUI_Demo LINK_PUBLIC OUI_lib ${V8_LIB})
+target_link_libraries(OUI_Demo LINK_PUBLIC OUI_lib ${V8_LIB})

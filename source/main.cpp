@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
 
 		oui::Window* window = new oui::Window();
 		window->setName("original");
-		window->setTitle(u"Falling Dots");
+		window->setTitle(u"OUI Demo");
 
 		window->addOSALStyle(u"./data/page.osal");
 
@@ -93,8 +93,8 @@ int main(int argc, char *argv[])
 
 void testV8() {
     // Initialize V8.
-  v8::V8::InitializeICUDefaultLocation("OUI_Demo");
-  v8::V8::InitializeExternalStartupData("OUI_Demo");
+  v8::V8::InitializeICUDefaultLocation("OUI Runtime");
+  v8::V8::InitializeExternalStartupData("OUI Runtime");
   std::unique_ptr<v8::Platform> platform = v8::platform::NewDefaultPlatform();
   v8::V8::InitializePlatform(platform.get());
   v8::V8::Initialize();
