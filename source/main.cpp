@@ -11,10 +11,14 @@ void testV8();
 int main(int argc, char *argv[])
 {
 	try {
+        long long v8Start = oui::currentTimeMillis();
         testV8();
+        std::cout << "V8 took " << (oui::currentTimeMillis() - v8Start) << "ms" << std::endl;
 		oui::Context context;
 
 		oui::initialize();
+
+        long long ouiStart = oui::currentTimeMillis();
 
 		oui::Window* window = new oui::Window();
 		window->setName("original");
@@ -44,7 +48,7 @@ int main(int argc, char *argv[])
 		const int BUTTON_LENGTH = 100;
 		oui::Button** buttons = new oui::Button*[BUTTON_LENGTH];
 		for (int i = 0; i < BUTTON_LENGTH; i++) {
-			
+			buttons[i] = NULL;
 		}
 
 		panel->getChildCont("container")->getChild("btn2")->addEventListener(oui::Event::CLICKED, [buttons, BUTTON_LENGTH](oui::MouseEvent e, oui::Component* c) {
@@ -61,6 +65,7 @@ int main(int argc, char *argv[])
 
 			std::cout << "added Buttons took: " << (oui::currentTimeMillis() - start) << "ms" << std::endl;
 		});
+        
 		panel->getChildCont("container")->getChild("btn3")->addEventListener(oui::Event::CLICKED, [panel](oui::MouseEvent e, oui::Component* c) {
 			if (e.type == oui::Event::CLICKED) {
 				for (int i = 0; i < 100; i++) {
@@ -74,6 +79,8 @@ int main(int argc, char *argv[])
 		
 		context.addWindow(window);
 		
+        std::cout << "OUI took " << (oui::currentTimeMillis() - ouiStart) << "ms" << std::endl;
+
 
 		while(true) {
 
