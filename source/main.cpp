@@ -13,14 +13,15 @@ int main(int argc, char *argv[])
 	try {
         long long v8Start = oui::currentTimeMillis();
         testV8();
-        std::cout << "V8 took " << (oui::currentTimeMillis() - v8Start) << "ms" << std::endl;
-		oui::Context context;
 
 		oui::initialize();
 
+        std::cout << "V8 took " << (oui::currentTimeMillis() - v8Start) << "ms" << std::endl;
+		oui::Context* context = new oui::SDLContext();
+
         long long ouiStart = oui::currentTimeMillis();
 
-		oui::Window* window = new oui::Window();
+		oui::Window* window = context->createWindow(1366, 768);
 		window->setName("original");
 		window->setTitle(u"OUI Demo");
 
@@ -77,14 +78,14 @@ int main(int argc, char *argv[])
 
 		window->setVisible(true);
 		
-		context.addWindow(window);
+		context->addWindow(window);
 		
         std::cout << "OUI took " << (oui::currentTimeMillis() - ouiStart) << "ms" << std::endl;
 
 
 		while(true) {
 
-			if(context.process() == -1) {
+			if(context->process() == -1) {
 				break;
 			}
 
