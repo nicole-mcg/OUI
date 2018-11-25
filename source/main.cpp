@@ -17,7 +17,7 @@ int main(int argc, char *argv[])
 		oui::initialize();
 
         std::cout << "V8 took " << (oui::currentTimeMillis() - v8Start) << "ms" << std::endl;
-		oui::Context* context = new oui::SDLContext();
+		oui::Context* context = oui::OS->createContext();
 
         long long ouiStart = oui::currentTimeMillis();
 
