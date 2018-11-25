@@ -6,7 +6,10 @@ elseif(CMAKE_SIZEOF_VOID_P EQUAL 4)
     # 32 bits
 endif()
 
-cmake_minimum_required (VERSION 2.8.11)
+set (CMAKE_CXX_STANDARD 11)
+
+
+cmake_minimum_required (VERSION 3.12.0)
 project (OUI_Demo)
 
 file(COPY data DESTINATION .)
