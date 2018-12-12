@@ -8,9 +8,11 @@ endif()
 
 set (CMAKE_CXX_STANDARD 11)
 
-
 cmake_minimum_required (VERSION 3.12.0)
 project (OUI_Demo)
+
+set(CMAKE_MSVCIDE_RUN_PATH sdlttf sdlimg)
+
 
 file(COPY data DESTINATION .)
 
