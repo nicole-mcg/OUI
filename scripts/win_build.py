@@ -1,4 +1,4 @@
-import sys, os, subprocess, shutil
+import sys, os, subprocess, shutil, requests, uuid, hashlib
 
 def exec(command, errorMessage="", showOutput=True):
     print(command)
@@ -41,8 +41,6 @@ if __name__ == "__main__":
         showOutput=False
     )
 
-    
-    
     print("Generating project with CMake")
     exec([
         'cmake',
