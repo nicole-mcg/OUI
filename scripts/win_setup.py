@@ -19,7 +19,8 @@ BINARY_INFO = [
         'folder': 'SDL2_ttf',
         'inner_folder': 'SDL2_ttf-2.0.14',
         'url': "https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-2.0.14-VC.zip",
-        'hash': 'f8ed51e7bb1122cf4dbbc4c47ab8eb13614fae233a20a6b9a5694769b0413c1a'
+        'hash': 'f8ed51e7bb1122cf4dbbc4c47ab8eb13614fae233a20a6b9a5694769b0413c1a',
+        'exclude': ['zlib1.dll'],
     }
 ]
 
@@ -69,13 +70,14 @@ def download_file(url, expectedHash=None):
         print("File verified with SHA256 hash")
     return './temp/{}'.format(file_name)
 
-def unzipLib(path, folder, innerDirectory=""):
+def unzipLib(path, folder, innerDirectory="", exclude=[]):
     extract_path = '{}/{}'.format(EXTRACT_PATH, folder)
     print("Unzipping file to {}".format(extract_path))
     sys.stdout.flush()
 
     with zipfile.ZipFile(path, 'r') as zip_ref:
-        zip_ref.extractall(extract_path)
+        members = [f for f in zip_ref.namelist() if os.path.split(f)[1] not in exclude]
+        zip_ref.extractall(extract_path, members)
     
     if innerDirectory != "":
         inner_path = "{}/{}".format(extract_path, innerDirectory)
@@ -86,12 +88,15 @@ def unzipLib(path, folder, innerDirectory=""):
 
 def download_and_unzip(binary_info):
     zip_path = download_file(binary_info['url'], binary_info['hash'])
-    unzipLib(zip_path, binary_info['folder'], binary_info['inner_folder'])
+    unzipLib(zip_path, binary_info['folder'], binary_info['inner_folder'], binary_info['exclude'] if 'exclude' in binary_info else [])
 
 if __name__ == "__main__":
 
-    if not os.path.isdir(EXTRACT_PATH):
-        os.makedirs(EXTRACT_PATH, exist_ok=True)
+    if os.path.isdir(EXTRACT_PATH):
+        print("Removing existing binaries")
+        shutil.rmtree(EXTRACT_PATH)
+
+    os.makedirs(EXTRACT_PATH, exist_ok=True)
 
     print("Downloading SDL binaries")
     for binary_info in BINARY_INFO:
