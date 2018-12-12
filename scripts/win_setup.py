@@ -90,7 +90,8 @@ def download_and_unzip(binary_info):
     zip_path = download_file(binary_info['url'], binary_info['hash'])
     unzipLib(zip_path, binary_info['folder'], binary_info['inner_folder'], binary_info['exclude'] if 'exclude' in binary_info else [])
 
-if __name__ == "__main__":
+def setup():
+    exec(['git', 'submodule', 'update', '--init', '--recursive'], "Failed to clone OUI")
 
     if os.path.isdir(EXTRACT_PATH):
         print("Removing existing binaries")
@@ -104,4 +105,5 @@ if __name__ == "__main__":
 
     cleanup()
 
-    
+if __name__ == "__main__":
+    setup()

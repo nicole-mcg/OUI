@@ -1,4 +1,5 @@
 import sys, os, subprocess, shutil, requests, uuid, hashlib
+import win_setup
 
 def exec(command, errorMessage="", showOutput=True):
     print(command)
@@ -34,8 +35,11 @@ def find_ms_build():
 
     return "{}\MSBuild\\{}.0\Bin\MSBuild.exe".format(path, version)
 
-if __name__ == "__main__":
-    
+def build():
+
+    if not os.path.isdir('./OUI') or not os.path.isdir('./OUI/lib/windows'):
+        win_setup.setup()
+
     exec(["cmake", "--version"],
         errorMessage="You must install CMake 3.12 or above",
         showOutput=False
@@ -86,4 +90,5 @@ if __name__ == "__main__":
         shutil.rmtree(outputFolder + '/data')
     shutil.copytree('./data', outputFolder + '/data')
     
-     
+if __name__ == "__main__":
+    build()
