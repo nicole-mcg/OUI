@@ -21,6 +21,7 @@ file(GLOB_RECURSE V8_LIB
 )
 
 add_subdirectory (OUI)
+add_subdirectory (tests)
 
 add_executable (OUI_Demo source/main.cpp)
 

@@ -10,9 +10,11 @@ def exec(command, errorMessage="", showOutput=True):
             print(errorMessage)
         sys.exit(1)
 
-SDL2_PATH = os.path.abspath("./OUI/lib/windows/SDL2/")
-SDL2_IMAGE_PATH = os.path.abspath("./OUI/lib/windows/SDL2_image/")
-SDL2_TTF_PATH = os.path.abspath("./OUI/lib/windows/SDL2_ttf/")
+LIB_PATH = './lib'
+
+SDL2_PATH = os.path.abspath("{}/windows/SDL2/".format(LIB_PATH))
+SDL2_IMAGE_PATH = os.path.abspath("{}/windows/SDL2_image/".format(LIB_PATH))
+SDL2_TTF_PATH = os.path.abspath("{}/windows/SDL2_ttf/".format(LIB_PATH))
 
 def is_num(s):
   try:
@@ -37,7 +39,7 @@ def find_ms_build():
 
 def build():
 
-    if not os.path.isdir('./OUI') or not os.path.isdir('./OUI/lib/windows'):
+    if not os.path.isdir('./OUI') or not os.path.isdir('{}/windows'.format(LIB_PATH)):
         win_setup.setup()
 
     exec(["cmake", "--version"],
@@ -54,6 +56,7 @@ def build():
         "-DSDL2_PATH='{}'".format(SDL2_PATH),
         "-DSDL2_IMAGE_PATH='{}'".format(SDL2_IMAGE_PATH),
         "-DSDL2_TTF_PATH='{}'".format(SDL2_TTF_PATH),
+        "-Dgtest_force_shared_crt=ON"
     ], "Could not generate project")
 
     print("Building project with MSBuild.exe")
@@ -77,7 +80,7 @@ def build():
     print("Copying SDL binaries")
     exclude = ['x86']
     copyZlib = False
-    for root, dir, filenames in os.walk('./OUI/lib/windows'):
+    for root, dir, filenames in os.walk('{}/windows'.format(LIB_PATH)):
         dir[:] = [d for d in dir if d not in exclude]
         for filename in filenames:
             if filename.endswith('.dll'):

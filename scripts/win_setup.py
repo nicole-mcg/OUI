@@ -1,27 +1,34 @@
 import sys, os, subprocess, shutil, requests, uuid, hashlib, zipfile
 
-EXTRACT_PATH = "./OUI/lib/windows"
+LIB_PATH = './lib'
+WINDOWS_EXTRACT_PATH = "{}/windows".format(LIB_PATH)
 
-BINARY_INFO = [
+LIB_INFO = [
     {
-        'folder': 'SDL2',
+        'extract_path': '{}/SDL2'.format(WINDOWS_EXTRACT_PATH),
         'inner_folder': 'SDL2-2.0.9',
         'url': "https://www.libsdl.org/release/SDL2-devel-2.0.9-VC.zip",
         'hash': 'ea266ef613f88433f493498f9e72e6bed5d03e4f3fde5b571a557a754ade9065'
     },
     {
-        'folder': 'SDL2_image',
+        'extract_path': '{}/SDL2_image'.format(WINDOWS_EXTRACT_PATH),
         'inner_folder': 'SDL2_image-2.0.4',
         'url': "https://www.libsdl.org/projects/SDL_image/release/SDL2_image-devel-2.0.4-VC.zip",
         'hash': '4e15fad9de43d738b476e422eef1910432443cead60d2084b3ef01d3f4a76087'
     },
     {
-        'folder': 'SDL2_ttf',
+        'extract_path': '{}/SDL2_ttf'.format(WINDOWS_EXTRACT_PATH),
         'inner_folder': 'SDL2_ttf-2.0.14',
         'url': "https://www.libsdl.org/projects/SDL_ttf/release/SDL2_ttf-devel-2.0.14-VC.zip",
         'hash': 'f8ed51e7bb1122cf4dbbc4c47ab8eb13614fae233a20a6b9a5694769b0413c1a',
         'exclude': ['zlib1.dll'],
-    }
+    },
+    {
+        'extract_path': './tests/gtest',
+        'inner_folder': 'googletest-release-1.8.1',
+        'url': "https://github.com/google/googletest/archive/release-1.8.1.zip",
+        'hash': '927827c183d01734cc5cfef85e0ff3f5a92ffe6188e0d18e909c5efebf28a0c7'
+    },
 ]
 
 def cleanup():
@@ -70,8 +77,12 @@ def download_file(url, expectedHash=None):
         print("File verified with SHA256 hash")
     return './temp/{}'.format(file_name)
 
-def unzipLib(path, folder, innerDirectory="", exclude=[]):
-    extract_path = '{}/{}'.format(EXTRACT_PATH, folder)
+def unzipLib(path, extract_path, innerDirectory="", exclude=[]):
+    if os.path.isdir(extract_path):
+        shutil.rmtree(extract_path)
+
+    os.makedirs(extract_path, exist_ok=True)
+
     print("Unzipping file to {}".format(extract_path))
     sys.stdout.flush()
 
@@ -88,19 +99,18 @@ def unzipLib(path, folder, innerDirectory="", exclude=[]):
 
 def download_and_unzip(binary_info):
     zip_path = download_file(binary_info['url'], binary_info['hash'])
-    unzipLib(zip_path, binary_info['folder'], binary_info['inner_folder'], binary_info['exclude'] if 'exclude' in binary_info else [])
+    unzipLib(
+        path=zip_path,
+        extract_path=binary_info['extract_path'],
+        innerDirectory=binary_info['inner_folder'], 
+        exclude=binary_info['exclude'] if 'exclude' in binary_info else []
+    )
 
 def setup():
     exec(['git', 'submodule', 'update', '--init', '--recursive'], "Failed to clone OUI")
 
-    if os.path.isdir(EXTRACT_PATH):
-        print("Removing existing binaries")
-        shutil.rmtree(EXTRACT_PATH)
-
-    os.makedirs(EXTRACT_PATH, exist_ok=True)
-
     print("Downloading SDL binaries")
-    for binary_info in BINARY_INFO:
+    for binary_info in LIB_INFO:
         download_and_unzip(binary_info)
 
     cleanup()

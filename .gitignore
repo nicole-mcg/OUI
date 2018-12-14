@@ -7,6 +7,10 @@ stdafx.cpp
 stdafx.h
 targetver.h
 
+lib
+
+tests/gtest
+
 .vscode
 
 .DS_Store
