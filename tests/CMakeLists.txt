@@ -33,7 +33,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/lib/gtest/include ${CMAKE_CURREN
 ##############
 # Unit Tests
 ##############
-add_executable(OUI_Tests test.cpp)
+add_executable(OUI_Tests main.cpp)
 
 # Standard linking to gtest stuff.
 target_link_libraries(OUI_Tests gtest gtest_main)

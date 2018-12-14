@@ -1,6 +1,14 @@
 import sys, os, subprocess, shutil, requests, uuid, hashlib
 import win_setup
 
+GEN_PATH = './gen/Windows'
+OUTPUT_FOLDER = './bin'
+
+LIB_PATH = './lib'
+SDL2_PATH = os.path.abspath("{}/windows/SDL2/".format(LIB_PATH))
+SDL2_IMAGE_PATH = os.path.abspath("{}/windows/SDL2_image/".format(LIB_PATH))
+SDL2_TTF_PATH = os.path.abspath("{}/windows/SDL2_ttf/".format(LIB_PATH))
+
 def exec(command, errorMessage="", showOutput=True):
     print(command)
     sys.stdout.flush()
@@ -9,12 +17,6 @@ def exec(command, errorMessage="", showOutput=True):
         if errorMessage is not "":
             print(errorMessage)
         sys.exit(1)
-
-LIB_PATH = './lib'
-
-SDL2_PATH = os.path.abspath("{}/windows/SDL2/".format(LIB_PATH))
-SDL2_IMAGE_PATH = os.path.abspath("{}/windows/SDL2_image/".format(LIB_PATH))
-SDL2_TTF_PATH = os.path.abspath("{}/windows/SDL2_ttf/".format(LIB_PATH))
 
 def is_num(s):
   try:
@@ -37,6 +39,15 @@ def find_ms_build():
 
     return "{}\MSBuild\\{}.0\Bin\MSBuild.exe".format(path, version)
 
+def copyAllWithExt(path, ext, outputPath, excludeFolders = []):
+    for root, dir, filenames in os.walk(path):
+        dir[:] = [d for d in dir if d not in excludeFolders]
+        for filename in filenames:
+            if filename.endswith("." + ext):
+                filepath = os.path.join(root, filename)
+                print("Copying {} to {}".format(filepath, outputPath))
+                shutil.copy2(filepath, outputPath)
+
 def build():
 
     if not os.path.isdir('./OUI') or not os.path.isdir('{}/windows'.format(LIB_PATH)):
@@ -52,7 +63,7 @@ def build():
         'cmake',
         '-G', 'Visual Studio 15 2017 Win64',
         '-S', '.',
-        '-B', 'build/Windows',
+        '-B', GEN_PATH,
         "-DSDL2_PATH='{}'".format(SDL2_PATH),
         "-DSDL2_IMAGE_PATH='{}'".format(SDL2_IMAGE_PATH),
         "-DSDL2_TTF_PATH='{}'".format(SDL2_TTF_PATH),
@@ -62,31 +73,40 @@ def build():
     print("Building project with MSBuild.exe")
     exec([
         '{}'.format(find_ms_build()),
-        './build/Windows/ALL_BUILD.vcxproj',
+        '{}/ALL_BUILD.vcxproj'.format(GEN_PATH),
         '/p:Configuration=Debug',
         '/p:Platform=x64'
     ], "Could not build project")
 
-    outputFolder = './build/Windows/Debug'
+    outputFolder = OUTPUT_FOLDER
+
+    if not os.path.isdir(outputFolder):
+        os.makedirs(outputFolder, exist_ok=True)
 
     print("Copying OUI binaries")
-    for root, dirnames, filenames in os.walk('./build/Windows/OUI/Debug'):
-        for filename in filenames:
-            if filename.endswith('.dll'):
-                filepath = os.path.join(root, filename)
-                print("Copying " + filepath)
-                shutil.copy2(os.path.join(root, filename), outputFolder)
+    copyAllWithExt(
+        path='{}/OUI/Debug'.format(GEN_PATH),
+        ext='dll',
+        outputPath=outputFolder
+    )
+    copyAllWithExt(
+        path='{}/Debug'.format(GEN_PATH),
+        ext='exe',
+        outputPath=outputFolder
+    )
+    copyAllWithExt(
+        path='{}/tests/Debug'.format(GEN_PATH),
+        ext='exe',
+        outputPath=outputFolder
+    )
 
     print("Copying SDL binaries")
-    exclude = ['x86']
-    copyZlib = False
-    for root, dir, filenames in os.walk('{}/windows'.format(LIB_PATH)):
-        dir[:] = [d for d in dir if d not in exclude]
-        for filename in filenames:
-            if filename.endswith('.dll'):
-                filepath = os.path.join(root, filename)
-                print("Copying " + filepath)
-                shutil.copy2(filepath, outputFolder)
+    copyAllWithExt(
+        path='{}/windows'.format(LIB_PATH),
+        ext='dll',
+        outputPath=outputFolder,
+        excludeFolders=['x86']
+    )
     
     print("Copying data folder")
     if os.path.isdir(outputFolder + '/data'):
