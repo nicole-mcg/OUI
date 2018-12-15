@@ -19,7 +19,6 @@ file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/data" DESTINATION ${CMAKE_CURRENT_BINARY_
 #     "/usr/local/opt/v8/lib/*.dylib"
 # )
 
-# add_subdirectory (OUI)
 add_subdirectory (tests)
 
 add_executable (OUI_Demo source/main.cpp)
