@@ -13,22 +13,21 @@ project (OUI_Demo)
 
 set(CMAKE_MSVCIDE_RUN_PATH sdlttf sdlimg)
 
+file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/data" DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
-file(COPY data DESTINATION .)
+# file(GLOB_RECURSE V8_LIB
+#     "/usr/local/opt/v8/lib/*.dylib"
+# )
 
-file(GLOB_RECURSE V8_LIB
-    "/usr/local/opt/v8/lib/*.dylib"
-)
-
-add_subdirectory (OUI)
+# add_subdirectory (OUI)
 add_subdirectory (tests)
 
 add_executable (OUI_Demo source/main.cpp)
 
-include_directories(
-    ${CMAKE_CURRENT_SOURCE_DIR}/OUI/include
-    /usr/local/opt/v8
-    /usr/local/opt/v8/include
-)
+# include_directories(
+#     ${PROJECT_SOURCE_DIR}/OUI-engine/include
+#     # /usr/local/opt/v8
+#     # /usr/local/opt/v8/include
+# )
 
-target_link_libraries(OUI_Demo LINK_PUBLIC OUI_lib ${V8_LIB})
+target_link_libraries(OUI_Demo LINK_PUBLIC OUI_lib)# ${V8_LIB})
