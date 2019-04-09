@@ -8,11 +8,18 @@
 }
 #window-title {
 	bg-color: 200 200 200 96;
+}
 
+button {
+	bg-color1: 255 255 255 128;
+	bg-color2: 255 255 255 128;
+	border-width: 0;
+	size: 0 0 100 30;
 }
 .window-button {
 	border-style: none;
 	bg-color: 200 200 200 96;
+	size: 0 0 25 25;
 }
 
 #title-page, #panel {
@@ -22,14 +29,4 @@
 #title-text {
 	font: "notoserif bold" 32;
 	text-color: 48 48 48;
-}
-#title-btn {
-	bg-color1: 255 255 255 128;
-	bg-color2: 255 255 255 128;
-	border-width: 0;
-	size: 0 0 100 30;
-}
-#title-btn:hover {
-	bg-color: 255 255 255 192;
-	size: 0 0 110 35;
 }

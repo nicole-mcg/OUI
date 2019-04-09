@@ -72,9 +72,9 @@ int main(int argc, char *argv[])
 }
 
 void setPage(oui::Window* window, std::u16string path) {
-	window->removeAllChildren();
 	oui::ComponentLoader cl;
 	cl.loadComponents(path);
+	window->removeAllChildren();
 	window->addChild(cl.toPanel());
 }
 
