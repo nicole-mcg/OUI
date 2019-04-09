@@ -1,6 +1,6 @@
-# OUI runtime
+# OUI engine
 
-See [OUI repo](https://github.com/nik-m2/OUI) for installation and usage instructions
+See [OUI repository](https://github.com/nik-m2/OUI) for installation and usage instructions
 
 <div>
     <center>
