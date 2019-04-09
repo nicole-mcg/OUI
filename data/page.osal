@@ -1,20 +1,23 @@
 
 #window-bar {
-	bg-color: 200 200 200 96;
+	bg-color: 200 200 200 128;
 }
 .window {
   min-width: 100;
   min-height: 100;
 }
+#window-title {
+	bg-color: 200 200 200 96;
+
+}
 .window-button {
 	border-style: none;
-	bg-color: 200 200 200 192;
-	text-color: 0 0 0;
+	bg-color: 200 200 200 96;
 }
 
 #title-page, #panel {
 	bg-color1: 142 244 255 255;
-	bg-color2: 102 204 215 255;
+	bg-color2: 82 184 195 255;
 }
 #title-text {
 	font: "notoserif bold" 32;
