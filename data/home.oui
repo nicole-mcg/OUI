@@ -1,0 +1,4 @@
+<panel name="panel" size="100 100 0 0">
+	<label name="title-text" text="'OUI Engine Demo'" location="50 50 0 -50" size="100 100" centered="true"/>
+	<button link="'./data/description.oui'" name="title-btn" location="50 50 0 50" text="'Continue'" right-click-options="'test123' '84848' 'nice yo'" centered="true">  
+</panel>
