@@ -1,4 +1,4 @@
-###### Note: This repository contains scripts to download, install and build OUI. If you're here to check out the code online go here: [Engine](https://github.com/nik-m2/OUI-engine) or [Runtime](https://github.com/nik-m2/OUI-runtime)
+###### Note: This repository is for the OUI JavaScript runtime. For the C++ library go here: [Engine](https://github.com/nik-m2/OUI-engine)
 
 # OUI
 
