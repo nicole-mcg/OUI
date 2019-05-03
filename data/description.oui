@@ -1,6 +1,49 @@
-<panel name="panel" size="100 100 0 0">
-	<label name="description" text="'OUI Engine Demo2!!'" location="0 0 8 38" size="100 100"/>
+<panel name="description-page" class="page" size="100 100 0 0">
+	<label
+		name="description-first"
+		class="paragraph"
+		text="'OUI is a cross-platform UI engine written in C++.\nIt is capable of running fast programs on many devices with little effort.'"
+		location="0 0 24 92"
+	/>
 
-	<button link="'./data/home.oui'" name="back-btn" location="0 100 16 -46" text="'Back'"></button
-	<button link="'./data/description.oui'" name="continue-btn" location="100 100 -108 -48" text="'Continue'"></button
+	<button
+		name="description-button"
+		class="demo-btn"
+		text="'Example Button'"
+		location="25 0 0 195"
+	/>
+
+	
+
+	<textfield
+		name="description-field"
+		class="demo-field"
+		text="'Example Field'"
+		location="75 0 0 195"
+	/>
+
+	<label
+		name="description-second"
+		class="paragraph"
+		text="'It comes with a set of easily customizable elements for developer\nto use within their apps.'"
+		location="0 0 24 248"
+	/>
+
+	<button
+		link="'./data/home.oui'"
+		name="back-btn"
+		location="0 0 64 48"
+	/>
+	<button
+		link="'./data/description.oui'"
+		name="continue-btn"
+		location="100 100 -108 -48"
+	/>
+
+	<menu
+		name="description-menu"
+		class="demo-menu"
+		location="50 0 0 195"
+		options="Example Menu"
+	/>
 </panel>

@@ -1,32 +1,79 @@
-
-#window-bar {
-	bg-color: 200 200 200 128;
-}
-.window {
-  min-width: 100;
-  min-height: 100;
-}
-#window-title {
-	bg-color: 200 200 200 96;
+.page {
+	bg-color1: 142 244 255 255;
+	bg-color2: 82 184 195 255;
 }
 
-button {
+.title {
+	font: "notoserif bold" 32;
+	text-color: 48 48 48;
+}
+.paragraph {
+	size: 100 0 0 75;
+	font: "notoserif bold" 18;
+	text-color: 48 48 48;
+	auto-size: false;
+}
+
+#continue-btn {
+	text: Continue;
+}
+#back-btn {
+	text: Back;
+}
+
+#back-btn, #continue-btn {
 	bg-color1: 255 255 255 128;
 	bg-color2: 255 255 255 128;
 	border-width: 0;
 	size: 0 0 100 30;
+	right-click-options:
+		"Right click menu from CSS"
+		"or from HTML"
+		"or C++/JavaScript";
+	centered: true;
+}
+#back-btn, #continue-btn:hover {
+	bg-color1: 255 255 255 160;
+	bg-color2: 255 255 255 160;
+	size: 0 0 110 35;
+}
+
+.demo-btn, .demo-btn:hover {
+	centered: true;
+	size: 0 0 125 30;
+	bg-color: 224 224 224 255;
+	border-width: 1;
+}
+.demo-btn:hover {
+	bg-color: 240 240 240 255;
+}
+
+.demo-field {
+	centered: true;
+	size: 0 0 125 30;
+}
+.demo-field:hover {
+	size: 0 0 125 30;
+	carat-height: 12;
+}
+
+.demo-menu {
+	centered: true;
+}
+
+.window {
+  min-width: 750;
+  min-height: 350;
+  resizable: false;
 }
 .window-button {
 	border-style: none;
 	bg-color: 200 200 200 96;
 	size: 0 0 25 25;
 }
-
-#title-page, #panel {
-	bg-color1: 142 244 255 255;
-	bg-color2: 82 184 195 255;
+#window-bar {
+	bg-color: 200 200 200 128;
 }
-#title-text {
-	font: "notoserif bold" 32;
-	text-color: 48 48 48;
+#window-title {
+	bg-color: 200 200 200 96;
 }
