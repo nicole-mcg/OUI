@@ -18,10 +18,13 @@ file(COPY "${CMAKE_CURRENT_SOURCE_DIR}/data" DESTINATION ${CMAKE_CURRENT_BINARY_
 #     "/usr/local/opt/v8/lib/*.dylib"
 # )
 
-
 set(OUI_ENGINE_BUILD_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib/OUI-engine/bin)
 set(OUI_INCLUDE ${OUI_ENGINE_BUILD_DIR}/include)
-set(OUI_LIB ${OUI_ENGINE_BUILD_DIR}/OUI.lib)
+if (UNIX)
+    set(OUI_LIB ${OUI_ENGINE_BUILD_DIR}/linux/libOUI.so)
+else()
+    set(OUI_LIB ${OUI_ENGINE_BUILD_DIR}/windows/OUI.lib)
+endif (UNIX)
 
 
 # Build tests

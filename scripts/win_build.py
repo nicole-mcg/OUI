@@ -1,11 +1,11 @@
 import os, subprocess, shutil, uuid, hashlib
-import common, win_setup
+import common, setup
 
 common.check_requests_package()
 import requests
 
 GEN_PATH = './gen/Windows'
-OUI_ENGINE_BINARY_PATH = './lib/OUI-engine/bin'
+OUI_ENGINE_BINARY_PATH = './lib/OUI-engine/bin/windows'
 
 VISUAL_STUDIO_VERSION_TO_GENERATOR = {
     "14": "Visual Studio 14 2015",
@@ -61,7 +61,7 @@ def build():
 
     if not os.path.isdir("{}/OUI-engine".format(common.LIB_PATH)) or \
             not os.path.isdir("{}/gtest".format(common.LIB_PATH)):
-        win_setup.setup()
+        setup.setup()
 
     common.exec(["cmake", "--version"],
         errorMessage="You must install CMake 3.14 or above",
@@ -94,7 +94,7 @@ def build():
         '/p:Platform=x64'
     ], "Could not build project")
 
-    outputFolder = common.WINDOWS_OUTPUT_FOLDER
+    outputFolder = "{}/windows".format(common.OUTPUT_FOLDER)
 
     if not os.path.isdir(outputFolder):
         os.makedirs(outputFolder, exist_ok=True)

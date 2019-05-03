@@ -4,17 +4,6 @@ import common
 common.check_requests_package()
 import requests
 
-LIB_INFO = [
-    {
-        'extract_path': '{}/gtest'.format(common.LIB_PATH),
-        'inner_folder': 'googletest-release-1.8.1',
-        'url': "https://github.com/google/googletest/archive/release-1.8.1.zip",
-        'hash': '927827c183d01734cc5cfef85e0ff3f5a92ffe6188e0d18e909c5efebf28a0c7'
-    },
-]
-
-
-
 def download_file(url, expectedHash=None):
     print("Downloading file from {}".format(url))
     sys.stdout.flush()
@@ -73,21 +62,13 @@ def download_and_unzip(binary_info):
         exclude=binary_info['exclude'] if 'exclude' in binary_info else []
     )
 
-def setup():
-    if not os.path.isdir("{}/OUI-engine".format(common.LIB_PATH)):
-        print("## Cloning OUI engine into ./lib/")
-        common.exec(['git', 'clone', 'https://github.com/nik-m2/OUI-engine.git', 'lib/OUI-engine'], "Failed to clone OUI engine")
-
-    print("Downloading Google Test")
-    for binary_info in LIB_INFO:
-        download_and_unzip(binary_info)
-
-    print("## Building OUI engine")
-    os.chdir("lib/OUI-engine")
-    common.exec(['python', 'scripts/win_build.py'], "Error building OUI")
-    os.chdir("../..")
-
-    common.cleanup()
-
-if __name__ == "__main__":
-    setup()
+def copyAllWithExt(path, ext, outputPath, excludeFolders = []):
+    if not os.path.isdir(outputPath):
+        os.makedirs('{}/'.format(outputPath), exist_ok=True)
+    for root, dir, filenames in os.walk(path):
+        dir[:] = [d for d in dir if d not in excludeFolders]
+        for filename in filenames:
+            if filename.endswith("." + ext):
+                filepath = os.path.join(root, filename)
+                print("Copying {} to {}".format(filepath, outputPath))
+                shutil.copy2(filepath, outputPath)
