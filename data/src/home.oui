@@ -8,7 +8,7 @@
 		centered="true"
 	/>
 	<button
-		link="'./data/description.oui'"
+		link="./data/src/description.oui"
 		name="continue-btn"
 		class="button"
 		location="50 50 0 50"
