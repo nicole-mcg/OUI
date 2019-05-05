@@ -2,20 +2,6 @@ import sys, os, shutil, subprocess, pip, platform
 
 LIB_PATH = './lib'
 WINDOWS_LIB_PATH = "{}/windows".format(LIB_PATH)
-OUTPUT_FOLDER = './bin'
-
-def needs_setup():
-    exec(["cmake", "--version"],
-        errorMessage="You must install CMake 3.14 or above",
-        showOutput=False
-    )
-
-    os_name = platform.system()
-    if os_name == "Windows":
-        return not os.path.isdir("{}/OUI-engine".format(LIB_PATH)) or \
-            not os.path.isdir("{}/gtest".format(LIB_PATH))
-    elif os_name == "Linux":
-        return True
 
 def cleanup():
     if os.path.isdir('./temp'):
