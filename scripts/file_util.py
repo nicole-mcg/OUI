@@ -5,7 +5,7 @@ common.check_requests_package()
 import requests
 
 def download_file(url, expectedHash=None):
-    common.log("Downloading file from {}".format(url))
+    common.log("Downloading file from {}".format(url), False)
 
     if not os.path.isdir('./temp'):
         os.mkdir('./temp')
@@ -25,11 +25,11 @@ def download_file(url, expectedHash=None):
     if build_hash:
         result = hasher.hexdigest()
         if result != expectedHash:
-            common.log("File did not match expected hash. URL={}".format(url))
-            common.log("Expected: {}".format(expectedHash))
-            common.log("Recieved: {}".format(result))
+            common.log("File did not match expected hash. URL={}".format(url), False)
+            common.log("Expected: {}".format(expectedHash), False)
+            common.log("Recieved: {}".format(result), False)
             common.exit_error()
-        common.log("File verified with SHA256 hash")
+        common.log("File verified with SHA256 hash", False)
     return './temp/{}'.format(file_name)
 
 def unzipLib(path, extract_path, innerDirectory="", exclude=[]):
@@ -38,7 +38,7 @@ def unzipLib(path, extract_path, innerDirectory="", exclude=[]):
 
     os.makedirs(extract_path, exist_ok=True)
 
-    common.log("Unzipping file to {}".format(extract_path))
+    common.log("Unzipping file to {}".format(extract_path), False)
 
     with zipfile.ZipFile(path, 'r') as zip_ref:
         members = [f for f in zip_ref.namelist() if os.path.split(f)[1] not in exclude]
