@@ -45,8 +45,8 @@ int main(int argc, char *argv[])
 		window->setName("original");
 		window->setTitle(u"OUI Demo");
 
-		window->addOSALStyle(u"./data/page.osal");
-		setPage(window, u"./data/home.oui");
+		window->addOSALStyle(u"./data/src/app.osal");
+		setPage(window, u"./data/src/home.oui");
 
 		window->setVisible(true);
 		context->addWindow(window);
