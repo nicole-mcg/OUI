@@ -12,17 +12,23 @@
     
 ## Setup
 
-### Requirements
+<section>
+<summary>Windows</summary>
+Download NodeJS if not already installed - https://nodejs.org/en/download/
 
-    - Windows
-        - NodeJS - https://nodejs.org/en/download/
-        - Both Python 2 & 3 -  https://www.python.org/downloads/
-            - OUI uses Python 3, `node-gyp` still uses Python 2
-            - Either set commands `python3` and `python` OR set `PYTHON_HOME` env variable to python 2 path (and keep 3 as `python` command)
-        <!-- - Windows 2017 buils tools (With C++ and NodeJS) -->
+</section>
 
+Download python3 if not already installed https://www.python.org/
+    - Note: `node-gyp` uses python2, which will be installed automatically
+
+With administrator permissions:
 ```
-npm i -g node-gyp
+npm install --global --production windows-build-tools
+```
+
+then:
+```
+npm install --global node-gyp
 python3 scripts/setup.py
 ```
 
