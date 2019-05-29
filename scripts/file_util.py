@@ -5,7 +5,8 @@ common.check_requests_package()
 import requests
 
 def download_file(url, expectedHash=None):
-    common.log("Downloading file from {}".format(url), False)
+    print("Downloading file from {}".format(url))
+    sys.stdout.flush()
 
     if not os.path.isdir('./temp'):
         os.mkdir('./temp')
@@ -25,11 +26,11 @@ def download_file(url, expectedHash=None):
     if build_hash:
         result = hasher.hexdigest()
         if result != expectedHash:
-            common.log("File did not match expected hash. URL={}".format(url), False)
-            common.log("Expected: {}".format(expectedHash), False)
-            common.log("Recieved: {}".format(result), False)
+            print("File did not match expected hash. URL={}".format(url))
+            print("Expected: {}".format(expectedHash))
+            print("Recieved: {}".format(result))
             common.exit_error()
-        common.log("File verified with SHA256 hash", False)
+        print("File verified with SHA256 hash")
     return './temp/{}'.format(file_name)
 
 def unzipLib(path, extract_path, innerDirectory="", exclude=[]):
@@ -38,7 +39,8 @@ def unzipLib(path, extract_path, innerDirectory="", exclude=[]):
 
     os.makedirs(extract_path, exist_ok=True)
 
-    common.log("Unzipping file to {}".format(extract_path), False)
+    print("Unzipping file to {}".format(extract_path))
+    sys.stdout.flush()
 
     with zipfile.ZipFile(path, 'r') as zip_ref:
         members = [f for f in zip_ref.namelist() if os.path.split(f)[1] not in exclude]
@@ -59,3 +61,14 @@ def download_and_unzip(binary_info):
         innerDirectory=binary_info['inner_folder'], 
         exclude=binary_info['exclude'] if 'exclude' in binary_info else []
     )
+
+def copyAllWithExt(path, ext, outputPath, excludeFolders = []):
+    if not os.path.isdir(outputPath):
+        os.makedirs('{}/'.format(outputPath), exist_ok=True)
+    for root, dir, filenames in os.walk(path):
+        dir[:] = [d for d in dir if d not in excludeFolders]
+        for filename in filenames:
+            if filename.endswith("." + ext):
+                filepath = os.path.join(root, filename)
+                print("Copying {} to {}".format(filepath, outputPath))
+                shutil.copy2(filepath, outputPath)

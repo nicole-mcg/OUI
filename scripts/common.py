@@ -2,26 +2,31 @@ import sys, os, shutil, subprocess, pip, platform
 
 LIB_PATH = './lib'
 WINDOWS_LIB_PATH = "{}/windows".format(LIB_PATH)
+OUTPUT_FOLDER = './bin'
+
+def needs_setup():
+    exec(["cmake", "--version"],
+        errorMessage="You must install CMake 3.14 or above",
+        showOutput=False
+    )
+
+    os_name = platform.system()
+    if os_name == "Windows":
+        return not os.path.isdir("{}/OUI-engine".format(LIB_PATH)) or \
+            not os.path.isdir("{}/gtest".format(LIB_PATH))
+    elif os_name == "Linux":
+        return True
 
 def cleanup():
     if os.path.isdir('./temp'):
         shutil.rmtree('./temp')
-
-def log(message, is_title=True):
-    if is_title:
-        print()
-    prefix = "## " if is_title else ""
-    print("{} {}".format(prefix, message))
-    if is_title:
-        print()
-    sys.stdout.flush()
 
 def exit_error():
     cleanup()
     sys.exit(1)
 
 def exec(command, errorMessage="", showOutput=True):
-    log(command, False)
+    print(command)
     sys.stdout.flush()
     try:
         result = subprocess.call(command)
@@ -29,7 +34,8 @@ def exec(command, errorMessage="", showOutput=True):
         result = True
     if (result != 0):
         if errorMessage is not "":
-            log(errorMessage, False)
+            print()
+            print(errorMessage)
         exit_error()
 
 def check_requests_package():
