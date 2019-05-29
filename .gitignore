@@ -7,6 +7,9 @@ stdafx.cpp
 stdafx.h
 targetver.h
 
+*-cppcheck-build-dir/
+*.cppcheck
+
 lib
 gen
 
