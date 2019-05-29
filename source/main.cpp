@@ -10,20 +10,6 @@
 
 using namespace oui;
 
-void setPage(oui::Window*, std::u16string path);
-
-class OUI_API LinkButton : public oui::Button {
-	private: std::u16string link;
-
-	public: ~LinkButton();
-	public: LinkButton(const std::string& name, const std::string& classes);
-
-	public: void setProfile(const std::u16string& profile) override;
-
-};
-
-
-
 int main(int argc, char *argv[])
 {
 	try {
@@ -70,33 +56,6 @@ int main(int argc, char *argv[])
 	std::cout << "Program successfully ended" << std::endl;
     return 0;
 }
-
-void setPage(oui::Window* window, std::u16string path) {
-	oui::ComponentLoader cl;
-	cl.loadComponents(path);
-	window->removeAllChildren();
-	window->addChild(cl.toPanel());
-}
-
-LinkButton::LinkButton(const std::string& name, const std::string& classes): link{u""}, Button(name, classes) {
-	addEventListener(Event::CLICKED, [this](MouseEvent e, Component* b) {
-		if (this->window == NULL || this->link.compare(u"") == 0) {
-			return;
-		}
-		setPage(this->window, this->link);
-	});
-}
-
-void LinkButton::setProfile(const std::u16string& profileName) {
-	Button::setProfile(profileName);
-
-	AttributeProfile* profile = style->getProfile(profileName);
-	if (profile != NULL) {
-		//link
-		link = profile->getString("link");
-	}
-}
-
 
 // void testV8() {
 //     // Initialize V8.
