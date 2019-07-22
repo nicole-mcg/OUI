@@ -19,20 +19,19 @@ int main(int argc, char *argv[])
 
 		oui::initialize();
 
-		ComponentLoader::addTag("button", [](const std::string& name, const std::string& classes, std::vector<std::string>, std::vector<std::u16string>) {
-			return new LinkButton(name, classes);
-		});
-
 		oui::Context* context = oui::OS()->createContext();
 
         long long ouiStart = oui::currentTimeMillis();
 
 		oui::Window* window = context->createWindow(1366, 768);
-		window->setName("original");
-		window->setTitle(u"OUI Demo");
+
+		std::string windowName = "original";
+		std::u16string windowTitle = u"OUI Demo";
+		window->setName(windowName);
+		window->setTitle(windowTitle);
 
 		window->addOSALStyle(u"./data/src/app.osal");
-		setPage(window, u"./data/src/home.oui");
+		window->setPage(u"./data/src/home.oui");
 
 		window->setVisible(true);
 		context->addWindow(window);
