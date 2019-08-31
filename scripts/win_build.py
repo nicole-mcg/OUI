@@ -1,4 +1,4 @@
-import os, subprocess, shutil, uuid, hashlib
+import os, subprocess, shutil, uuid, hashlib, sys
 import common, setup
 
 common.check_requests_package()
@@ -63,6 +63,10 @@ def build():
             not os.path.isdir("{}/gtest".format(common.LIB_PATH)):
         setup.setup()
 
+    debug = False
+    if "-D" in sys.argv:
+        debug = True
+
     common.exec(["cmake", "--version"],
         errorMessage="You must install CMake 3.14 or above",
         showOutput=False
@@ -73,9 +77,21 @@ def build():
 
     version = get_visual_studio_version()
 
-    debug = False
-
     build_type = "Debug" if debug else "Release"
+
+    python_command = "python3"
+    try:
+        command_failed = subprocess.call(["python3", "--version"])
+    except:
+        command_failed = True
+    print("command failed?" + str(command_failed))
+    if command_failed:
+        python_command = "python"
+
+    print("## Building OUI engine")
+    os.chdir("lib/OUI-engine")
+    common.exec([python_command, 'scripts/build.py', "-D" if debug else ""], "Error building OUI engine")
+    os.chdir("../..")
 
     print("\nGenerating project with CMake")
     common.exec([
@@ -94,10 +110,12 @@ def build():
         '/p:Platform=x64'
     ], "Could not build project")
 
-    outputFolder = "{}/windows".format(common.OUTPUT_FOLDER)
+    outputFolder = "{}/windows/{}".format(common.OUTPUT_FOLDER, "debug" if debug else "release")
 
     if not os.path.isdir(outputFolder):
         os.makedirs(outputFolder, exist_ok=True)
+
+    ouiEngineBinaryPath = "{}/{}".format(OUI_ENGINE_BINARY_PATH, "debug" if debug else "release")
 
     print("\nCopying OUI binaries")
     copyAllWithExt(
@@ -106,7 +124,7 @@ def build():
         outputPath=outputFolder
     )
     copyAllWithExt(
-        path=OUI_ENGINE_BINARY_PATH,
+        path=ouiEngineBinaryPath,
         ext='dll',
         outputPath=outputFolder
     )

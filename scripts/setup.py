@@ -23,20 +23,6 @@ def setup():
     for binary_info in LIB_INFO:
         file_util.download_and_unzip(binary_info)
 
-    python_command = "python3"
-    try:
-        command_failed = subprocess.call(["python3", "--version"])
-    except:
-        command_failed = True
-    print("command failed?" + str(command_failed))
-    if command_failed:
-        python_command = "python"
-
-    print("## Building OUI engine")
-    os.chdir("lib/OUI-engine")
-    common.exec([python_command, 'scripts/build.py'], "Error building OUI engine")
-    os.chdir("../..")
-
     common.cleanup()
 
 if __name__ == "__main__":
