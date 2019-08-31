@@ -64,7 +64,7 @@ def build():
         setup.setup()
 
     debug = False
-    if "-D" in sys.argv:
+    if "-D" in sys.argv or "--debug" in sys.argv:
         debug = True
 
     common.exec(["cmake", "--version"],
@@ -99,7 +99,8 @@ def build():
         '-G', VISUAL_STUDIO_VERSION_TO_GENERATOR[version],
         '-S', '.',
         '-B', GEN_PATH,
-        "-Dgtest_force_shared_crt=ON"
+        "-Dgtest_force_shared_crt=ON",
+        "-DCMAKE_BUILD_TYPE={}".format(build_type.upper())
     ], "Could not generate project\nAre Visual Studio C++ tools and CMake 3.14+ installed?")
 
     print("\nBuilding project with MSBuild.exe")

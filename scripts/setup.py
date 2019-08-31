@@ -1,4 +1,4 @@
-import os, subprocess
+import os, subprocess, sys
 import common, file_util
 
 common.check_requests_package()
@@ -16,8 +16,14 @@ LIB_INFO = [
 
 def setup():
     if not os.path.isdir("{}/OUI-engine".format(common.LIB_PATH)):
-        print("## Cloning OUI engine into ./lib/")
-        common.exec(['git', 'clone', 'https://github.com/nik-m2/OUI-engine.git', 'lib/OUI-engine'], "Failed to clone OUI engine")
+        
+        ouiEngineBranch = "master"
+        if "-B" in sys.argv or "--branch" in sys.argv:
+            branchIndex = (sys.argv.index("-B") if "-B" in sys.argv else sys.argv.index("--branch")) + 1
+            ouiEngineBranch = sys.argv[branchIndex]
+
+        print("## Cloning OUI engine into ./lib/ (branch {})".format(ouiEngineBranch))
+        common.exec(['git', 'clone', "-b", ouiEngineBranch, 'https://github.com/nik-m2/OUI-engine.git', 'lib/OUI-engine'], "Failed to clone OUI engine")
 
     print("Downloading Google Test")
     for binary_info in LIB_INFO:
