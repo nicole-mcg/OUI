@@ -67,6 +67,10 @@ def build():
     if "-D" in sys.argv or "--debug" in sys.argv:
         debug = True
 
+    runAfterBuild = False
+    if "-r" in sys.argv or "--run" in sys.argv:
+        runAfterBuild = True
+
     common.exec(["cmake", "--version"],
         errorMessage="You must install CMake 3.14 or above",
         showOutput=False
@@ -154,6 +158,10 @@ def build():
     shutil.copytree('{}/data'.format(GEN_PATH), outputFolder + '/data')
 
     print("\nFinished build")
+
+    if runAfterBuild:
+        print("Starting OUI Runtime")
+        common.exec("{}/OUI_Runtime.exe".format(outputFolder), "Error running OUI")
     
 if __name__ == "__main__":
     build()
