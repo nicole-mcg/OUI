@@ -68,7 +68,7 @@ def build():
         debug = True
 
     runAfterBuild = False
-    if "-r" in sys.argv or "--run" in sys.argv:
+    if "-R" in sys.argv or "--run" in sys.argv:
         runAfterBuild = True
 
     common.exec(["cmake", "--version"],
